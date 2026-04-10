@@ -74,6 +74,10 @@ export class FigmaReader {
 
     const hierarchy = this.buildHierarchy(rootNode, 0);
 
+    if (nodes.length === 0) {
+      throw new Error("No usable design elements found. The Figma file may be empty, or the selected node may contain only decorative elements (vectors, images). Try selecting a different frame or node.");
+    }
+
     log.verbose(`Parsed ${nodes.length} nodes, ${textContent.length} text elements, ${componentNames.length} components`);
 
     return {
@@ -147,12 +151,34 @@ export class FigmaReader {
     return line;
   }
 
-  private async fetch<T>(url: string): Promise<T> {
-    const response = await fetch(url, {
-      headers: {
-        "X-Figma-Token": this.token,
-      },
-    });
+  private static MAX_RETRIES = 3;
+
+  private async fetch<T>(url: string, _retryCount = 0): Promise<T> {
+    let response: Response;
+    try {
+      response = await fetch(url, {
+        headers: {
+          "X-Figma-Token": this.token,
+        },
+        signal: AbortSignal.timeout(30_000),
+      });
+    } catch (error) {
+      const msg = error instanceof Error ? error.message : String(error);
+      if (msg.includes("abort") || msg.includes("timeout")) {
+        throw new Error("Figma API request timed out after 30s. The file may be very large — try selecting a specific node instead of the entire file.");
+      }
+      throw new Error(`Network error connecting to Figma API: ${msg}. Check your internet connection.`);
+    }
+
+    if (response.status === 429) {
+      if (_retryCount >= FigmaReader.MAX_RETRIES) {
+        throw new Error("Figma API rate limited — max retries exceeded. Wait a moment and try again.");
+      }
+      const delay = Math.min(5_000 * 2 ** _retryCount, 30_000);
+      log.warn(`Figma rate limited — waiting ${Math.round(delay / 1000)}s (${_retryCount + 1}/${FigmaReader.MAX_RETRIES})...`);
+      await new Promise((resolve) => setTimeout(resolve, delay));
+      return this.fetch<T>(url, _retryCount + 1);
+    }
 
     if (!response.ok) {
       if (response.status === 400) {

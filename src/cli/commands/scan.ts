@@ -1,4 +1,6 @@
+import chalk from "chalk";
 import type { Command } from "commander";
+import { writeFileSync } from "node:fs";
 import { parseFigmaUrl } from "../../figma/url-parser.js";
 import { FigmaReader, figmaDataToFileContent } from "../../figma/reader.js";
 import { ThreatModelAgent } from "../../agents/threat-model.js";
@@ -8,7 +10,6 @@ import { CostTracker } from "../../utils/cost.js";
 import { log, setVerbose } from "../../utils/logger.js";
 import { formatThreatModelResult } from "../../utils/formatter.js";
 import { printBanner } from "../../utils/banner.js";
-import { writeFileSync } from "node:fs";
 
 export function registerScanCommand(program: Command): void {
   program
@@ -50,7 +51,15 @@ export function registerScanCommand(program: Command): void {
         // 5. Run threat model agent
         log.step("Analyzing design for security threats...");
         const llm = new LLMClient(config.apiKey, config.model);
-        const regulations = opts.regulations?.split(",").map((r) => r.trim()) ?? [];
+        const regulations = opts.regulations?.split(",").map((r) => r.trim()).filter(Boolean) ?? [];
+        if (regulations.length > 0) {
+          const { REGULATIONS } = await import("../../data/security-ux-patterns.js");
+          const validIds = new Set(REGULATIONS.map((r) => r.id));
+          const invalid = regulations.filter((r) => !validIds.has(r));
+          if (invalid.length > 0) {
+            log.warn(`Unknown regulation IDs: ${invalid.join(", ")}. Valid IDs: ${[...validIds].join(", ")}`);
+          }
+        }
         const agent = new ThreatModelAgent(llm, regulations);
 
         const costTracker = new CostTracker(config.model);
@@ -83,6 +92,3 @@ export function registerScanCommand(program: Command): void {
       }
     });
 }
-
-// Import chalk for verbose streaming (lazy import to avoid issues in non-TTY)
-import chalk from "chalk";

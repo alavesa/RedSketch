@@ -38,6 +38,7 @@ export abstract class BaseAgent<T = unknown> {
       data: response.data,
       rawResponse: JSON.stringify(response.data),
       tokensUsed: response.usage,
+      model: context.config.model,
     };
   }
 }

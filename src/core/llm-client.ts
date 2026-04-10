@@ -80,12 +80,23 @@ export class LLMClient {
         .map((block) => block.text)
         .join("\n");
 
+      if (!text.trim()) {
+        throw new Error("Claude returned an empty response. The design may be too large or the request may have been filtered. Try a smaller node selection.");
+      }
+
       if (isHaiku) {
         const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
         if (jsonMatch) text = jsonMatch[1].trim();
       }
 
-      const parsed = schema.parse(JSON.parse(text));
+      let jsonData: unknown;
+      try {
+        jsonData = JSON.parse(text);
+      } catch {
+        throw new Error(`Claude returned invalid JSON. This usually means the response was truncated. Try increasing maxTokens or scanning a smaller design.\n\nResponse preview: ${text.slice(0, 200)}...`);
+      }
+
+      const parsed = schema.parse(jsonData);
 
       return {
         data: parsed,

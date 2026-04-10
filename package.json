@@ -1,6 +1,6 @@
 {
   "name": "redsketch",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Threat-model your Figma designs before writing a single line of code",
   "type": "module",
   "bin": {

@@ -30,7 +30,8 @@ function loadFileConfig(startDir: string): Partial<RedSketchConfig> {
   if (!configPath) return {};
   try {
     return configSchema.parse(JSON.parse(readFileSync(configPath, "utf-8")));
-  } catch {
+  } catch (error) {
+    log.warn(`Failed to parse ${configPath}: ${error instanceof Error ? error.message : "invalid JSON"}. Using defaults.`);
     return {};
   }
 }
@@ -40,7 +41,8 @@ function loadGlobalConfig(): Partial<RedSketchConfig> {
   if (!existsSync(globalPath)) return {};
   try {
     return configSchema.parse(JSON.parse(readFileSync(globalPath, "utf-8")));
-  } catch {
+  } catch (error) {
+    log.warn(`Failed to parse ${globalPath}: ${error instanceof Error ? error.message : "invalid JSON"}. Using defaults.`);
     return {};
   }
 }

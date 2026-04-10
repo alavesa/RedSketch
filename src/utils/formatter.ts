@@ -71,6 +71,7 @@ export function formatThreatModelResult(result: ThreatModelResult): string {
 
   // ── Threats ─────────────────────────────────────────────
   lines.push(chalk.bold.underline("STRIDE Threat Analysis"));
+  lines.push(chalk.dim("  Spoofing · Tampering · Repudiation · Information Disclosure · Denial of Service · Elevation of Privilege"));
   lines.push("");
 
   if (result.threats.length === 0) {

@@ -134,4 +134,4 @@ RedSketch's knowledge base comes from the [Security UX Pattern Library](https://
 
 ## License
 
-MIT — Piia Alavesa
+MIT

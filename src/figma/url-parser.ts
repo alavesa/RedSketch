@@ -10,6 +10,8 @@ export interface FigmaUrlParts {
  *   figma.com/design/:fileKey/:fileName?node-id=:nodeId
  *   figma.com/design/:fileKey/branch/:branchKey/:fileName
  *   figma.com/file/:fileKey/...
+ *   figma.com/make/:fileKey/:fileName
+ *   figma.com/board/:fileKey/:fileName (FigJam)
  */
 export function parseFigmaUrl(url: string): FigmaUrlParts {
   let parsed: URL;
@@ -28,7 +30,7 @@ export function parseFigmaUrl(url: string): FigmaUrlParts {
   // figma.com/design/:fileKey/branch/:branchKey/:fileName
   // figma.com/design/:fileKey/:fileName
   // figma.com/file/:fileKey/:fileName
-  if (segments.length < 2 || !["design", "file"].includes(segments[0])) {
+  if (segments.length < 2 || !["design", "file", "make", "board"].includes(segments[0])) {
     throw new Error(`Unsupported Figma URL format: ${url}`);
   }
 

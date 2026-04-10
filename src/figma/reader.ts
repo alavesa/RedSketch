@@ -155,6 +155,13 @@ export class FigmaReader {
     });
 
     if (!response.ok) {
+      if (response.status === 400) {
+        const body = await response.json().catch(() => ({})) as Record<string, unknown>;
+        if (typeof body.err === "string" && body.err.includes("File type not supported")) {
+          throw new Error("This file type is not supported by the Figma REST API. Make files (figma.com/make/) cannot be read via the API yet. Try using a standard design file (figma.com/design/) instead.");
+        }
+        throw new Error(`Figma API error (400): ${typeof body.err === "string" ? body.err : "Bad Request"}`);
+      }
       if (response.status === 403) {
         throw new Error("Figma API access denied. Check your FIGMA_ACCESS_TOKEN has read access to this file.");
       }

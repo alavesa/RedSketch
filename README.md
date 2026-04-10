@@ -1,5 +1,16 @@
 # RedSketch
 
+```
+  ██████╗ ███████╗██████╗ ███████╗██╗  ██╗███████╗████████╗ ██████╗██╗  ██╗
+  ██╔══██╗██╔════╝██╔══██╗██╔════╝██║ ██╔╝██╔════╝╚══██╔══╝██╔════╝██║  ██║
+  ██████╔╝█████╗  ██║  ██║███████╗█████╔╝ █████╗     ██║   ██║     ███████║
+  ██╔══██╗██╔══╝  ██║  ██║╚════██║██╔═██╗ ██╔══╝     ██║   ██║     ██╔══██║
+  ██║  ██║███████╗██████╔╝███████║██║  ██╗███████╗   ██║   ╚██████╗██║  ██║
+  ╚═╝  ╚═╝╚══════╝╚═════╝ ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝    ╚═════╝╚═╝  ╚═╝
+
+  Threat-model your Figma designs before writing a single line of code
+```
+
 **Threat-model your Figma designs before writing a single line of code.**
 
 RedSketch reads your Figma design files and generates STRIDE-based security threat models from the UI layer. It identifies authentication flows, data inputs, payment screens, consent patterns, and more — then maps them against 34 proven security UX patterns and 19 international regulations.

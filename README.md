@@ -39,7 +39,7 @@ redsketch scan "https://figma.com/design/abc123/MyApp?node-id=1-234"
 
 1. **Reads** your Figma design structure via the Figma REST API
 2. **Identifies** security-relevant UI elements (login forms, data inputs, file uploads, payment flows, consent screens, admin panels)
-3. **Generates** STRIDE threat analysis for each identified asset
+3. **Generates** STRIDE threat analysis for each identified asset (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege)
 4. **Matches** findings against 34 Security UX patterns from [uxsec.dev](https://uxsec.dev)
 5. **Flags** compliance gaps across 19 regulations (GDPR, NIS2, DORA, PCI DSS, EU AI Act, and more)
 

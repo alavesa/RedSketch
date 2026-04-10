@@ -81,14 +81,18 @@ Set them as environment variables (recommended) or in a `.redsketch.json` config
 | `pci` | PCI DSS 4.0 |
 | `ftc` | FTC Act — Deceptive Practices |
 | `euaiact` | EU AI Act — Article 50 Transparency |
+| `usai` | Colorado AI Act + California AI Transparency Act |
 | `nis2` | Network and Information Security Directive 2 (EU) |
-| `dora` | Digital Operational Resilience Act (EU) |
-| `cra` | Cyber Resilience Act (EU) |
-| `eaa` | European Accessibility Act |
-| `iec62443` | Industrial Control System Security |
+| `dora` | Digital Operational Resilience Act (EU — Financial Sector) |
+| `cra` | Cyber Resilience Act (EU — Products with Digital Elements) |
+| `eaa` | European Accessibility Act (EU) |
+| `iec62443` | Industrial Automation & Control System Security |
+| `iec61511` | Safety Instrumented Systems for Process Industries |
+| `isa182` | Alarm Management (ISA-18.2 / EEMUA 191) |
+| `isa101` | Human Machine Interfaces for Process Industries |
 | `wcag` | Web Content Accessibility Guidelines 2.2 |
 | `fido2` | WebAuthn / FIDO2 |
-| `iso42001` | AI Management System |
+| `iso42001` | AI Management System — Responsible AI Governance |
 
 ## How It Works
 

@@ -128,7 +128,7 @@ RedSketch's knowledge base comes from the [Security UX Pattern Library](https://
 - **Dark Patterns** (6 patterns) — Confirmshaming, cookie consent, hidden unsubscribe
 - **Data Protection** (4 patterns) — Encryption, file upload, deletion, audit logs
 - **OWASP Top 10** (3 patterns) — Access control, misconfiguration, logging
-- **AI Transparency** (6 patterns) — Disclosure, content labeling, decision explanation, input safety, human override
+- **AI Transparency** (5 patterns) — Disclosure, content labeling, decision explanation, input safety, human override
 - **Industrial** (4 patterns) — Operator auth, safety-critical, alarms, HMI navigation
 - **Governance** (3 patterns) — Design review, change management, compliance audit
 

@@ -16,7 +16,7 @@
 
 **Threat-model your Figma designs before writing a single line of code.**
 
-RedSketch reads your Figma design files and generates STRIDE-based security threat models from the UI layer. It identifies authentication flows, data inputs, payment screens, consent patterns, and more — then maps them against 34 proven security UX patterns and 19 international regulations.
+RedSketch reads your Figma design files and generates STRIDE-based security threat models from the UI layer. It identifies authentication flows, data inputs, payment screens, consent patterns, and more — then maps them against 36 proven security UX patterns and 19 international regulations.
 
 ## Install
 
@@ -40,7 +40,7 @@ redsketch scan "https://figma.com/design/abc123/MyApp?node-id=1-234"
 1. **Reads** your Figma design structure via the Figma REST API
 2. **Identifies** security-relevant UI elements (login forms, data inputs, file uploads, payment flows, consent screens, admin panels)
 3. **Generates** STRIDE threat analysis for each identified asset (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege)
-4. **Matches** findings against 34 Security UX patterns from [uxsec.dev](https://uxsec.dev)
+4. **Matches** findings against 36 Security UX patterns from [uxsec.dev](https://uxsec.dev)
 5. **Flags** compliance gaps across 19 regulations (GDPR, NIS2, DORA, PCI DSS, EU AI Act, and more)
 
 ## Usage
@@ -121,14 +121,14 @@ The analysis happens before any code exists — catching security issues at the 
 
 ## Pattern Library
 
-RedSketch's knowledge base comes from the [Security UX Pattern Library](https://uxsec.dev) — 34 interactive patterns across 8 categories:
+RedSketch's knowledge base comes from the [Security UX Pattern Library](https://uxsec.dev) — 36 interactive patterns across 8 categories:
 
 - **Authentication** (8 patterns) — Login, MFA, passwords, sessions, passkeys, OAuth
 - **Threat Response** (3 patterns) — Breach notification, phishing, suspicious activity
 - **Dark Patterns** (6 patterns) — Confirmshaming, cookie consent, hidden unsubscribe
 - **Data Protection** (4 patterns) — Encryption, file upload, deletion, audit logs
 - **OWASP Top 10** (3 patterns) — Access control, misconfiguration, logging
-- **AI Transparency** (3 patterns) — Disclosure, content labeling, decision explanation
+- **AI Transparency** (6 patterns) — Disclosure, content labeling, decision explanation, input safety, human override
 - **Industrial** (4 patterns) — Operator auth, safety-critical, alarms, HMI navigation
 - **Governance** (3 patterns) — Design review, change management, compliance audit
 

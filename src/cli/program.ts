@@ -7,7 +7,7 @@ export function createProgram(): Command {
   program
     .name("redsketch")
     .description("Threat-model your Figma designs before writing a single line of code")
-    .version("0.2.1");
+    .version("0.2.2");
 
   registerScanCommand(program);
 

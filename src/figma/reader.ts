@@ -201,11 +201,15 @@ export class FigmaReader {
   }
 }
 
+const MAX_TEXT_ITEMS = 200;
+const MAX_CONTENT_CHARS = 80_000;
+
 export function figmaDataToFileContent(data: FigmaDesignData): { path: string; content: string; language: string } {
   const parts: string[] = [];
 
   parts.push(`# Figma Design: ${data.fileName}`);
   if (data.nodeId) parts.push(`# Node: ${data.nodeId}`);
+  parts.push(`# Stats: ${data.nodes.length} nodes, ${data.textContent.length} text elements, ${data.componentNames.length} components`);
   parts.push("");
 
   parts.push("## Component Names");
@@ -218,10 +222,17 @@ export function figmaDataToFileContent(data: FigmaDesignData): { path: string; c
   }
   parts.push("");
 
+  // Deduplicate and cap text content to avoid flooding the prompt
+  const uniqueText = [...new Set(data.textContent.map((t) => t.slice(0, 150)))];
+  const textToShow = uniqueText.slice(0, MAX_TEXT_ITEMS);
+
   parts.push("## Text Content Found");
-  if (data.textContent.length > 0) {
-    for (const text of data.textContent) {
-      parts.push(`- "${text.slice(0, 200)}"`);
+  if (textToShow.length > 0) {
+    for (const text of textToShow) {
+      parts.push(`- "${text}"`);
+    }
+    if (uniqueText.length > MAX_TEXT_ITEMS) {
+      parts.push(`... and ${uniqueText.length - MAX_TEXT_ITEMS} more text elements (truncated)`);
     }
   } else {
     parts.push("(no text content found)");
@@ -231,9 +242,15 @@ export function figmaDataToFileContent(data: FigmaDesignData): { path: string; c
   parts.push("## Design Hierarchy");
   parts.push(data.hierarchy);
 
+  // Final safety cap on total content size
+  let content = parts.join("\n");
+  if (content.length > MAX_CONTENT_CHARS) {
+    content = content.slice(0, MAX_CONTENT_CHARS) + "\n\n... (truncated — design too large, try scanning a specific node)";
+  }
+
   return {
     path: `figma://${data.fileKey}/${data.nodeId ?? "root"}`,
-    content: parts.join("\n"),
+    content,
     language: "figma-design",
   };
 }

@@ -8,6 +8,6 @@ export interface RedSketchConfig {
 
 export const DEFAULT_CONFIG: Omit<RedSketchConfig, "apiKey" | "figmaToken"> = {
   model: "claude-sonnet-4-6",
-  maxTokens: 16384,
+  maxTokens: 32768,
   temperature: 1,
 };
